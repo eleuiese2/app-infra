@@ -1,0 +1,86 @@
+name: Infra Plan
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  Plan:
+    name: Plan
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    environment: infra-reader
+    defaults:
+      run:
+        working-directory: "."
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.DIG_READER_GITHUB_ACCESS_TOKEN }}
+          persist-credentials: true
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.8.3
+          terraform_wrapper: true
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: us-east-1
+          role-to-assume: ${{ secrets.AWS_ROLE_TF_READER }}
+          role-duration-seconds: 3600
+
+      - name: Configure Git Permissions
+        run: |
+          git config --local --remove-section http."https://github.com/"
+          git config --global url."https://${GH_USER}:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
+        env:
+          GH_USER: ${{ secrets.DIG_READER_GITHUB_USER }}
+          GH_TOKEN: ${{ secrets.DIG_READER_GITHUB_ACCESS_TOKEN }}
+
+      - name: Terraform Fmt
+        id: fmt
+        run: terraform fmt -check -recursive
+        continue-on-error: false 
+
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform init \
+          -input=false \
+          -backend-config="infra-sim" \
+          -backend-config="key=infra.tfstate" \
+          -backend-config="region=us-east-1" \
+          -backend-config="encrypt=true"
+        env:
+          TF_BUCKET_NAME: ${{ env.TF_BUCKET_NAME }}
+          TF_STATE_FILE_NAME: ${{ env.TF_STATE_FILE_NAME }}
+          AWS_REGION: ${{ env.AWS_REGION }}
+          
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          terraform plan -input=false -compact-warnings -var-file=qa.auto.tfvars \
+          -out=tfplan -no-color -refresh=true
+
+      - name: Terraform Show
+        id: show
+        run: terraform show tfplan -no-color
+
+      - name: save tfplan
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: tfplan
+          retention-days: 1
