@@ -1,5 +1,5 @@
 module "vpc_virginia" {
-  source = "github.com/eleuiese2/aws-vpc-iac.git"
+  source               = "github.com/eleuiese2/aws-vpc-iac.git"
   create               = var.create
   vpc_name             = var.vpc_name
   cidr_block_vpc       = var.cidr_block_vpc
