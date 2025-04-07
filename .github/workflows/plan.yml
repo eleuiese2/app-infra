@@ -53,25 +53,20 @@ jobs:
         id: init
         run: |
           terraform init \
-          -input=false \
+          -input=true \
           -backend-config="bucket=infra-sim" \
           -backend-config="key=infra.tfstate" \
           -backend-config="region=us-east-1" \
           -backend-config="encrypt=true"
-        env:
-          TF_BUCKET_NAME: ${{ env.TF_BUCKET_NAME }}
-          TF_STATE_FILE_NAME: ${{ env.TF_STATE_FILE_NAME }}
-          AWS_REGION: ${{ env.AWS_REGION }}
           
-
       - name: Terraform Validate
         id: validate
-        run: terraform validate
+        run: terraform validate 
 
       - name: Terraform Plan
         id: plan
         run: |
-          terraform plan -input=false -compact-warnings -var-file=dev.tfvars \
+          terraform plan -input=false -compact-warnings -var-file=dev.auto.tfvars \
           -out=tfplan -no-color -refresh=true
 
       - name: Terraform Show
