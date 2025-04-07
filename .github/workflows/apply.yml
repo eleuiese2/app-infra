@@ -56,8 +56,8 @@ jobs:
         run: |
           terraform init \
           -input=false \
-          -backend-config="bucket=qa-sfa-test-state" \
-          -backend-config="key=infra.tfstate" \
+          -backend-config="bucket=infra-sim" \
+          -backend-config="key=infra-sim.tfstate" \
           -backend-config="region=us-east-1" \
           -backend-config="encrypt=true"
         env:
