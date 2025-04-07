@@ -1,0 +1,88 @@
+name: Infra Apply
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  Apply:
+    name: Apply
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    environment: infra
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: us-east-1
+          role-to-assume: ${{ secrets.AWS_ROLE_TF_WRITER }}
+          role-duration-seconds: 3600
+
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.DIG_READER_GITHUB_ACCESS_TOKEN }}
+          persist-credentials: true
+
+      - name: Configure Git Permissions
+        run: |
+          git config --local --remove-section http."https://github.com/"
+          git config --global url."https://${GH_USER}:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
+        env:
+          GH_USER: ${{ secrets.DIG_READER_GITHUB_USER }}
+          GH_TOKEN: ${{ secrets.DIG_READER_GITHUB_ACCESS_TOKEN }}
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.8.3
+          terraform_wrapper: true
+      
+      - name: Get Pull Request
+        id: get-pr-number
+        run: |
+          PULL_REQUEST_NUMBER=$(gh pr list --state merged --search ${{ github.sha }} --base ${{ github.ref_name }} --json number --jq '.[].number')
+          echo Pull request number is: $PULL_REQUEST_NUMBER
+          echo "::set-output name=pull_request_number::${PULL_REQUEST_NUMBER}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.DIG_READER_GITHUB_ACCESS_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform init \
+          -input=false \
+          -backend-config="bucket=qa-sfa-test-state" \
+          -backend-config="key=infra.tfstate" \
+          -backend-config="region=us-east-1" \
+          -backend-config="encrypt=true"
+        env:
+          TF_BUCKET_NAME: ${{ env.TF_BUCKET_NAME }}
+          TF_STATE_FILE_NAME: ${{ env.TF_STATE_FILE_NAME }}
+          AWS_REGION: ${{ env.AWS_REGION }}
+
+      - name: Download tfplan 
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: tfplan
+          workflow_conclusion: success
+          workflow: plan.yml
+          github_token: ${{ secrets.DIG_READER_GITHUB_ACCESS_TOKEN }}
+          pr: ${{ steps.get-pr-number.outputs.pull_request_number }}
+
+      - name: Terraform Show
+        id: show
+        run: terraform show tfplan -no-color
+
+      - name: get web identity token
+        id: web-token
+        run: |
+          curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value' > /tmp/web_identity_token_file
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -input=false -compact-warnings -auto-approve tfplan
