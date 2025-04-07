@@ -67,11 +67,11 @@ jobs:
         id: plan
         run: |
           terraform plan -input=false -compact-warnings -var-file=dev.auto.tfvars \
-          -out=tfplan -no-color -refresh=true
+          -out=tfplan -refresh=true
 
       - name: Terraform Show
         id: show
-        run: terraform show tfplan -no-color
+        run: terraform show tfplan
 
       - name: save tfplan
         uses: actions/upload-artifact@v4
