@@ -55,7 +55,7 @@ jobs:
           terraform init \
           -input=true \
           -backend-config="bucket=infra-sim" \
-          -backend-config="key=infra.tfstate" \
+          -backend-config="key=infra-sim.tfstate" \
           -backend-config="region=us-east-1" \
           -backend-config="encrypt=true"
           
