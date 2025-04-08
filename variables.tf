@@ -51,14 +51,6 @@ variable "namespace" {
   type = string
 }
 
-variable "environment" {
-  type = string
-}
-
-variable "project" {
-  type = string
-}
-
 variable "kubernetes_version" {
   type = string
 }
@@ -81,4 +73,22 @@ variable "endpoint_public_access" {
 variable "public_access_cidrs" {
   type    = list(string)
   default = ["0.0.0.0/0"]
+}
+
+variable "create_ecr" {
+  type = bool
+}
+
+variable "ecr_name" {
+  type = string
+}
+
+variable "allowed_ip" {
+  description = "Dirección IP permitida para acceder al clúster EKS"
+  type        = string
+}
+
+variable "fargate_additional_policy_arns" {
+  description = "ARNs de políticas adicionales para el perfil de Fargate"
+  type        = list(string)
 }
