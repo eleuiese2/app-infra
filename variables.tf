@@ -51,14 +51,6 @@ variable "namespace" {
   type = string
 }
 
-variable "environment" {
-  type = string
-}
-
-variable "project" {
-  type = string
-}
-
 variable "kubernetes_version" {
   type = string
 }
