@@ -16,7 +16,7 @@ module "backend" {
   environment               = var.environment
   project                   = var.project
   vpc_id                    = module.network.vpc_id
-  subnet_ids                = module.network.private_subnets_ids
+  subnet_ids                = module.network.private_subnet_ids
   kubernetes_version        = var.kubernetes_version
   enabled_cluster_log_types = var.enabled_cluster_log_types
   endpoint_private_access   = var.endpoint_private_access
