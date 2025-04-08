@@ -1,4 +1,4 @@
-variable "create" {
+variable "create_eks" {
   type = bool
 }
 variable "namespace" {

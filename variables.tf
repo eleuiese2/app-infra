@@ -7,7 +7,7 @@ variable "tags" {
   }
 }
 
-variable "create" {
+variable "create_vpc" {
   description = "Crear recursos"
   type        = bool
 }
@@ -44,7 +44,7 @@ variable "availability_zones" {
 
 
 #########EKs########
-variable "create" {
+variable "create_eks" {
   type = bool
 }
 variable "namespace" {

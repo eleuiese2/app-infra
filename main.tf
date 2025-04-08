@@ -1,6 +1,6 @@
 module "network" {
   source               = "./networking"
-  create               = var.create
+  create_vpc           = var.create_vpc
   vpc_name             = var.vpc_name
   cidr_block_vpc       = var.cidr_block_vpc
   region               = var.region
@@ -11,7 +11,7 @@ module "network" {
 
 module "backend" {
   source                    = "./backend"
-  create                    = var.create
+  create_eks                = var.create_eks
   namespace                 = var.namespace
   environment               = var.environment
   project                   = var.project
@@ -23,6 +23,5 @@ module "backend" {
   endpoint_public_access    = var.endpoint_public_access
   public_access_cidrs       = var.public_access_cidrs
   tags                      = var.tags
-
 }
 

@@ -1,4 +1,4 @@
-variable "create" {
+variable "create_vpc" {
   description = "Crear recursos"
   type        = bool
 }
