@@ -1,4 +1,4 @@
-create_vpc     = true
+create_vpc     = false
 vpc_name       = "sim-vpc"
 cidr_block_vpc = "10.0.0.0/16"
 region         = "us-east-1"
@@ -19,8 +19,8 @@ availability_zones = [
   "us-east-1c"
 ]
 
-create_eks                     = true
-create_ecr                     = true
+create_eks                     = false
+create_ecr                     = false
 ecr_name                       = ["app1", "app2"]
 namespace                      = "sim-demo"
 kubernetes_version             = "1.29"
