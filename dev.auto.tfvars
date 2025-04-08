@@ -21,7 +21,7 @@ availability_zones = [
 
 create_eks                     = true
 create_ecr                     = true
-ecr_name                       = "sim-ecr"
+ecr_name                       = ["app1", "app2"]
 namespace                      = "sim-demo"
 kubernetes_version             = "1.29"
 enabled_cluster_log_types      = ["api", "audit"]
@@ -30,6 +30,7 @@ endpoint_public_access         = true
 public_access_cidrs            = ["10.0.0.0/16"]
 fargate_additional_policy_arns = ["arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy"]
 allowed_ip                     = "186.29.181.202/32"
+scan_on_push                   = false
 
 tags = {
   Owner       = "devops-team"
