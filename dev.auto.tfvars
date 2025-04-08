@@ -1,4 +1,4 @@
-create         = false
+create_vpc     = true
 vpc_name       = "sim-vpc"
 cidr_block_vpc = "10.0.0.0/16"
 region         = "us-east-1"
@@ -17,4 +17,20 @@ availability_zones = [
   "us-east-1a",
   "us-east-1b",
   "us-east-1c"
-] 
+]
+
+create_eks                = true
+namespace                 = "sim-demo"
+environment               = "dev"
+project                   = "sim-eapp"
+kubernetes_version        = "1.29"
+enabled_cluster_log_types = ["api", "audit"]
+endpoint_private_access   = false
+endpoint_public_access    = true
+public_access_cidrs       = ["10.0.0.0/16"]
+
+tags = {
+  Owner       = "devops-team"
+  Environment = "dev"
+  Terraform   = "true"
+}

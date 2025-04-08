@@ -7,7 +7,7 @@ variable "tags" {
   }
 }
 
-variable "create" {
+variable "create_vpc" {
   description = "Crear recursos"
   type        = bool
 }
@@ -42,3 +42,43 @@ variable "availability_zones" {
   type        = list(string)
 }
 
+
+#########EKs########
+variable "create_eks" {
+  type = bool
+}
+variable "namespace" {
+  type = string
+}
+
+variable "environment" {
+  type = string
+}
+
+variable "project" {
+  type = string
+}
+
+variable "kubernetes_version" {
+  type = string
+}
+
+variable "enabled_cluster_log_types" {
+  type    = list(string)
+  default = []
+}
+
+variable "endpoint_private_access" {
+  type    = bool
+  default = false
+}
+
+variable "endpoint_public_access" {
+  type    = bool
+  default = true
+}
+
+variable "public_access_cidrs" {
+  type    = list(string)
+  default = ["0.0.0.0/0"]
+}
