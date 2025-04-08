@@ -7,4 +7,10 @@ module "eks_virginia" {
   cidr_public_subnets  = var.cidr_public_subnets
   cidr_private_subnets = var.cidr_private_subnets
   availability_zones   = var.availability_zones
+  project              = var.project
+  namespace            = var.namespace
+  environment          = var.environment
+  kubernetes_version   = var.kubernetes_version
+  subnet_ids           = var.subnet_ids
+  tags                 = var.tags
 }
