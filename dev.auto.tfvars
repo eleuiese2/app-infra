@@ -29,7 +29,7 @@ endpoint_private_access        = false
 endpoint_public_access         = true
 public_access_cidrs            = ["10.0.0.0/16"]
 fargate_additional_policy_arns = ["arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy"]
-allowed_ip                     = "10.20.230.25/32"
+allowed_ip                     = "186.29.181.202/32"
 
 tags = {
   Owner       = "devops-team"
