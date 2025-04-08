@@ -1,5 +1,5 @@
 module "eks_virginia" {
-  source               = "github.com/eleuiese2/aws-vpc-iac.git"
+  source               = "github.com/eleuiese2/aws-eks-iac.git"
   create               = var.create
   vpc_id               = var.vpc_id
   cidr_block_vpc       = var.cidr_block_vpc
