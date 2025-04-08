@@ -12,7 +12,4 @@ module "eks_virginia" {
   tags                           = var.tags
   allowed_ip                     = var.allowed_ip
   fargate_additional_policy_arns = var.fargate_additional_policy_arns
-
-
-
 }

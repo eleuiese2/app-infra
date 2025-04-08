@@ -100,8 +100,3 @@ variable "fargate_additional_policy_arns" {
   description = "ARNs de políticas adicionales para el perfil de Fargate"
   type        = list(string)
 }
-
-variable "fargate_additional_policy_arns" {
-  description = "ARNs de políticas adicionales para el perfil de Fargate"
-  type        = list(string)
-}
