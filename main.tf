@@ -27,5 +27,6 @@ module "backend" {
   ecr_name                       = var.ecr_name
   allowed_ip                     = var.allowed_ip
   fargate_additional_policy_arns = var.fargate_additional_policy_arns
+  scan_on_push                   = var.scan_on_push
 }
 

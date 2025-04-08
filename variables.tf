@@ -80,7 +80,7 @@ variable "create_ecr" {
 }
 
 variable "ecr_name" {
-  type = string
+  type = list(string)
 }
 
 variable "allowed_ip" {
@@ -91,4 +91,9 @@ variable "allowed_ip" {
 variable "fargate_additional_policy_arns" {
   description = "ARNs de políticas adicionales para el perfil de Fargate"
   type        = list(string)
+}
+
+variable "scan_on_push" {
+  description = "Habilitar el escaneo de imágenes al subir a ECR"
+  type        = bool
 }
