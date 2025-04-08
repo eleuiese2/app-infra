@@ -5,11 +5,11 @@ output "vpc_id" {
 
 output "public_subnet_ids" {
   description = "The IDs of the public subnets"
-  value       = module.vpc_virginia.public_subnets_ids
+  value       = module.vpc_virginia.public_subnet_ids
 
 }
 
 output "private_subnet_ids" {
   description = "The IDs of the private subnets"
-  value       = module.vpc_virginia.private_subnets_ids
+  value       = module.vpc_virginia.private_subnet_ids
 }
