@@ -10,6 +10,7 @@ module "network" {
 }
 
 module "backend" {
+  depends_on = [ module.network ]
   source                    = "./backend"
   create_eks                = var.create_eks
   namespace                 = var.namespace
