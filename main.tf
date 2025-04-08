@@ -24,5 +24,6 @@ module "backend" {
   endpoint_public_access    = var.endpoint_public_access
   public_access_cidrs       = var.public_access_cidrs
   tags                      = var.tags
+  create_ecr                = var.create_ecr
 }
 

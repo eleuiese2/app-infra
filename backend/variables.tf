@@ -1,6 +1,10 @@
 variable "create_eks" {
   type = bool
 }
+
+variable "create_ecr" {
+  type = bool
+}
 variable "namespace" {
   type = string
 }
