@@ -5,12 +5,9 @@ module "eks_virginia" {
   ecr_name                       = var.ecr_name
   vpc_id                         = var.vpc_id
   public_subnet_ids              = var.public_subnet_ids
-  priavate_subnet_ids            = var.private_subnet_ids
-  project                        = var.project
-  namespace                      = var.namespace
+  private_subnet_ids             = var.private_subnet_ids
   environment                    = var.environment
   kubernetes_version             = var.kubernetes_version
-  subnet_ids                     = var.subnet_ids
   tags                           = var.tags
   allowed_ip                     = var.allowed_ip
   fargate_additional_policy_arns = var.fargate_additional_policy_arns
