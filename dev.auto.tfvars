@@ -21,6 +21,7 @@ availability_zones = [
 
 create_eks                = true
 create_ecr                = true
+ecr_name                  = "sim-ecr"
 namespace                 = "sim-demo"
 environment               = "dev"
 project                   = "sim-eapp"

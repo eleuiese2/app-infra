@@ -25,5 +25,6 @@ module "backend" {
   public_access_cidrs       = var.public_access_cidrs
   tags                      = var.tags
   create_ecr                = var.create_ecr
+  ecr_name                  = var.ecr_name
 }
 
