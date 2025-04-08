@@ -14,8 +14,6 @@ module "backend" {
   source                         = "./backend"
   create_eks                     = var.create_eks
   namespace                      = var.namespace
-  environment                    = var.environment
-  project                        = var.project
   vpc_id                         = module.network.vpc_id
   private_subnet_ids             = module.network.private_subnet_ids
   public_subnet_ids              = module.network.public_subnet_ids

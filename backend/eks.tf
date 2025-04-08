@@ -4,6 +4,8 @@ module "eks_virginia" {
   create_ecr                     = var.create_ecr
   ecr_name                       = var.ecr_name
   vpc_id                         = var.vpc_id
+  public_subnet_ids              = var.public_subnet_ids
+  priavate_subnet_ids            = var.private_subnet_ids
   project                        = var.project
   namespace                      = var.namespace
   environment                    = var.environment
